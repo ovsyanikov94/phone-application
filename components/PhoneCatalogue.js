@@ -5,18 +5,21 @@ class PhoneCatalogue{
     constructor( options ){
 
         this._element = options.element;
-        this._render();
 
+        this._phones = options.phones;
+
+        this._render();
 
     }
 
     _render(){
 
-        this._element.innerHTML = `<ul class="phones"> 
-                                        ${document.querySelector('#template').innerHTML}
-                                   </ul>
-                                   `
+        let compiled = _.template( document.querySelector('#template').innerHTML );
 
-    }
+        this._element.innerHTML = compiled({
+            'phones': this._phones
+        });
+
+    }//_render
 
 }
