@@ -1,6 +1,6 @@
 "use strict";
 
-class PhoneCatalogue{
+export default class PhoneCatalogue{
 
     constructor( options ){
 
