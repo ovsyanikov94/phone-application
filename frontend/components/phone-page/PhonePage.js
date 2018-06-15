@@ -156,14 +156,16 @@ const Phones = [
     }
 ];
 
-class PhonePage{
+import PhoneCatalogue from '../phone-catalogue/PhoneCatalogue';
+
+export default class PhonePage{
 
     constructor( options ){
 
         this._element= options.element;
 
         this._catalogue = new PhoneCatalogue({
-            element: this._element.querySelector('[data-component="phone-catalogue"]'),
+            element: document.querySelector('[data-component="phone-catalogue"]'),
             phones: Phones,
         });
 
