@@ -1,6 +1,8 @@
 "use strict";
 
-class PhoneCatalogue{
+import template from './template.hbs';
+
+export default class PhoneCatalogue{
 
     constructor( options ){
 
@@ -14,10 +16,8 @@ class PhoneCatalogue{
 
     _render(){
 
-        let compiled = _.template( document.querySelector('#template').innerHTML );
-
-        this._element.innerHTML = compiled({
-            'phones': this._phones
+        this._element.innerHTML = template({
+            'phonesArray': this._phones
         });
 
     }//_render

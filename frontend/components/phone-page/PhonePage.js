@@ -156,7 +156,10 @@ const Phones = [
     }
 ];
 
-class PhonePage{
+
+import  PhoneCatalogue from '../phone-catalogue/PhoneCatalogue';
+
+export default class PhonePage{
 
     constructor( options ){
 
