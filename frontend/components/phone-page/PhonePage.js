@@ -156,7 +156,7 @@ const Phones = [
     }
 ];
 
-import PhoneCatalogue from '../phone-catalogue/PhoneCatalogue';
+import  PhoneCatalogue from '../phone-catalogue/PhoneCatalogue';
 
 export default class PhonePage{
 
