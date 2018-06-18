@@ -3,19 +3,20 @@
 const path = require('path');
 
 module.exports = {
-
     mode: "production",
-    entry: "./frontend/app.js",
+    entry: './frontend/app.js',
     output: {
-        path: path.resolve(__dirname , "public/js"),
-        filename: "index.js"
+        filename: 'index.js',
+        path: path.resolve(__dirname, 'public/js')
     },
+    devtool: "source-map",
     module: {
-        rules:[
-            {
-                test: /\.hbs$/,
-                loader: "handlebars-loader"
-            }
+        rules: [
+                {
+                    test: /\.hbs$/,
+                    loader: "handlebars-loader"
+                }
         ]
-    }
+    },
+    watch: true
 };
