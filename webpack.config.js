@@ -17,6 +17,6 @@ module.exports = {
                     loader: "handlebars-loader"
                 }
         ]
-    }
+    },
     watch: true
 };
