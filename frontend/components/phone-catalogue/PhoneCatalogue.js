@@ -1,17 +1,17 @@
 "use strict";
 import template from './template.hbs';
+import Component from '../component/component';
 
-export default class PhoneCatalogue{
+export default class PhoneCatalogue extends Component{
 
     constructor( options ){
 
-        this._element = options.element;
-
+        super( options );
         this._phones = options.phones;
 
         this._render();
 
-    }
+    }//constructor
 
     _render(){
 
