@@ -2,7 +2,7 @@
 
 import PhonePage from './components/phone-page/PhonePage';
 
-new PhonePage({
+let app = new PhonePage({
     element: document.querySelector('[data-component="phone-page"]')
 });
 

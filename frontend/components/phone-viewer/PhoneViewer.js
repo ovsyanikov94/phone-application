@@ -23,6 +23,17 @@ export default class PhoneViewer extends Component{
             'phone': this._phone
         });
 
+        this.on('click' , this._goBack.bind(this) , '[data-element="button-back"]' );
+
     }//_render
+
+    _goBack( ){
+
+        this._phone = null;
+
+        let backEvent = new CustomEvent('moveBack');
+        this._element.dispatchEvent(backEvent);
+
+    }//_goBack
 
 }
