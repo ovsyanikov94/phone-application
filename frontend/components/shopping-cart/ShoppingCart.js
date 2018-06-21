@@ -27,6 +27,8 @@ export default class ShoppingCart extends Component{
 
     addPhone( phone ){
 
+
+
         let isHavePhone = this._phones.some( p => p.name === phone.name );
 
         if( !isHavePhone ){
@@ -39,10 +41,10 @@ export default class ShoppingCart extends Component{
 
             for ( let i = 0 ; i <  this._phones.length ; i++){
 
-                let phone = this._phones[i];
+                let currentPhone = this._phones[i];
 
-                if(phone.name === name){
-                    p.amount++;
+                if(phone.name === currentPhone.name){
+                    currentPhone.amount++;
                     break;
                 }//if
 
@@ -50,26 +52,52 @@ export default class ShoppingCart extends Component{
 
         }//else
 
+        //phones=[12,54,12,34,12]
+
+        let phoneMap = this._phones.map( (p) => {
+            return {
+                'id': p.id,
+                'amount': p.amount
+            }
+        } ) ;
+
+        let serializePhoneString =  JSON.stringify(phoneMap);
+
+        document.cookie = `phones=${serializePhoneString};`;
+
         this._render();
 
     }//addPhone
 
-    removePhone( name ){
+    removePhone( id ){
 
         for ( let i = 0 ; i <  this._phones.length ; i++){
 
             let phone = this._phones[i];
 
-            if(phone.name === name){
-                this._phones.splice(index , 1);
+            if(phone.id === id){
+
+                this._phones.splice(i , 1);
+                this._render();
                 break;
+
             }//if
 
         }//for i
 
-        this._render();
+
 
     }//removePhone
+
+    _onRemovePhoneFromBasket( event ){
+
+        let removeEvent = new CustomEvent( 'removePhoneFromBasket' , {
+            detail: event.target.dataset.phoneId
+        });
+
+        this._element.dispatchEvent(removeEvent);
+
+    }
 
     getPhones(){
         return this._phones;
@@ -81,6 +109,8 @@ export default class ShoppingCart extends Component{
             'title': this._title,
             'phones': this._phones
         });
+
+        this.on('click' , this._onRemovePhoneFromBasket.bind(this) , '[data-element="delete-phone"]');
 
     }//_render
 

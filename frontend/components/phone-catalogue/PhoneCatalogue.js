@@ -40,7 +40,6 @@ export default class PhoneCatalogue extends Component{
 
             if(parent){
 
-                console.log( parent.dataset);
                 this._phoneSelectedEvent.detail.phoneID = parent.dataset.phoneId;
                 this._element.dispatchEvent(this._phoneSelectedEvent);
 

@@ -1,6 +1,6 @@
 <div>
 
-    <img class="phone" src="public/{{phone.images.[0]}}">
+    <img data-element="phone-thumbnail" class="phone" src="public/{{phone.images.[0]}}">
 
     <button data-element="button-back">Back</button>
     <button data-element="button-add-basket">Add to basket</button>
@@ -12,7 +12,7 @@
     <ul class="phone-thumbs">
         {{#each phone.images as |image| }}
             <li>
-                <img src="public/{{image}}" alt=""  >
+                <img data-element="phone-photo" src="public/{{image}}" alt=""  >
             </li>
         {{/each}}
     </ul>

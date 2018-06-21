@@ -11,6 +11,7 @@ export default class PhonePage extends Component{
 
     constructor( options ){
 
+
         super( options );
 
         this._phoneViewer = new PhoneViewer({
@@ -55,6 +56,11 @@ export default class PhonePage extends Component{
 
     }
 
+    onPhoneRemoveFromBasket( event ){
+        this._shoppingCart.removePhone( event.detail );
+
+    }
+
     async _load(){
 
 
@@ -66,9 +72,30 @@ export default class PhonePage extends Component{
                 phones: phones,
             });
 
+            let phonesFromCookies = JSON.parse(document.cookie.split('=')[1]);
+            console.log(phonesFromCookies);
+
+            phones.forEach( p=> {
+
+                phonesFromCookies.forEach( sub => {
+
+                    if( sub.id === p.id ){
+
+                        this._shoppingCart.addPhone({
+                            'name': p.name,
+                            'amount': sub.amount
+                        });
+
+                    }//if
+
+                } );
+
+            } );
+
             this.on('phoneSelected' , this.onPhoneSelected.bind(this) , '[data-component="phone-catalogue"]');
             this.on('moveBack' , this.onButtonBack.bind(this) , '[data-component="phone-viewer"]');
             this.on('addPhoneToBasket' , this.onPhoneAdded.bind(this) , '[data-component="phone-viewer"]');
+            this.on('removePhoneFromBasket' , this.onPhoneRemoveFromBasket.bind(this) , '[data-component="shopping-cart"]');
 
         }//try
         catch(ex){
