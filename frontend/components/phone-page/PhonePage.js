@@ -4,6 +4,7 @@ import PhoneCatalogue from '../phone-catalogue/PhoneCatalogue';
 import HttpService from '../services/http.service';
 import PhoneViewer from '../phone-viewer/PhoneViewer';
 import Component from "../component/component";
+import ShoppingCart from "../shopping-cart/ShoppingCart";
 
 
 export default class PhonePage extends Component{
@@ -15,6 +16,12 @@ export default class PhonePage extends Component{
         this._phoneViewer = new PhoneViewer({
             element: document.querySelector('[data-component="phone-viewer"]'),
         });
+
+        this._shoppingCart = new ShoppingCart({
+            element: document.querySelector('[data-component="shopping-cart"]'),
+        });
+
+
 
         this._load();
 
@@ -42,6 +49,12 @@ export default class PhonePage extends Component{
 
     }//onButtonBack
 
+    onPhoneAdded( event ){
+
+        this._shoppingCart.addPhone( event.detail );
+
+    }
+
     async _load(){
 
 
@@ -55,6 +68,7 @@ export default class PhonePage extends Component{
 
             this.on('phoneSelected' , this.onPhoneSelected.bind(this) , '[data-component="phone-catalogue"]');
             this.on('moveBack' , this.onButtonBack.bind(this) , '[data-component="phone-viewer"]');
+            this.on('addPhoneToBasket' , this.onPhoneAdded.bind(this) , '[data-component="phone-viewer"]');
 
         }//try
         catch(ex){

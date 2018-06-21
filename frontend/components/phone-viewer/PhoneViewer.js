@@ -24,6 +24,7 @@ export default class PhoneViewer extends Component{
         });
 
         this.on('click' , this._goBack.bind(this) , '[data-element="button-back"]' );
+        this.on('click' , this._addPhoneToBasket.bind(this) , '[data-element="button-add-basket"]' );
 
     }//_render
 
@@ -35,5 +36,15 @@ export default class PhoneViewer extends Component{
         this._element.dispatchEvent(backEvent);
 
     }//_goBack
+
+    _addPhoneToBasket(  ){
+
+        let addPhoneEvent = new CustomEvent('addPhoneToBasket',{
+            detail: this._phone
+        });
+
+        this._element.dispatchEvent(addPhoneEvent);
+
+    }
 
 }
