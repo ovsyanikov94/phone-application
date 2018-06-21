@@ -1,0 +1,22 @@
+<p>{{title}} ({{phones.length}})</p>
+<ul>
+    {{#if phones }}
+
+        {{#each phones as |phone|}}
+
+            <li>
+                <span>{{phone.name}} ({{phone.amount}})</span>
+                <span
+                        data-element="delete-phone"
+                        data-phone-id="{{phone.id}}"
+                        style="color: red; font-size: 20px"
+                >X </span>
+            </li>
+
+        {{/each}}
+
+    {{else}}
+        <li>Cart is empty!</li>
+    {{/if}}
+
+</ul>
