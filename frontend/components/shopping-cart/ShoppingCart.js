@@ -3,15 +3,6 @@
 import Component from '../component/component';
 import template from './template.hbs';
 
-Array.prototype.myForeach = function (callback){
-
-    for ( let index = 0 ; index < this.length ; index++  ){
-
-        callback(this[index] , index , this);
-
-    }//for i
-
-};
 
 export default class ShoppingCart extends Component{
 
@@ -51,19 +42,6 @@ export default class ShoppingCart extends Component{
             }//for i
 
         }//else
-
-        //phones=[12,54,12,34,12]
-
-        let phoneMap = this._phones.map( (p) => {
-            return {
-                'id': p.id,
-                'amount': p.amount
-            }
-        } ) ;
-
-        let serializePhoneString =  JSON.stringify(phoneMap);
-
-        document.cookie = `phones=${serializePhoneString};`;
 
         this._render();
 

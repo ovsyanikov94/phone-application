@@ -49,4 +49,13 @@ export default class PhoneCatalogue extends Component{
 
     }//_phoneSelected
 
+    setPhones( phones ){
+        this._phones = phones;
+        this._render();
+    }
+
+    getPhones(){
+        return this._phones;
+    }
+
 }

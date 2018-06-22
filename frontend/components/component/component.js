@@ -19,19 +19,20 @@ export default class Component{
 
     on(eventName , callback , selector ){
 
-
         if(selector){
 
-            let target = this._element.querySelectorAll( selector );
+            let elements = this._element.querySelectorAll( selector );
 
-            if(target){
-                target.forEach( ( elem )=>{
+            if(elements){
+                elements.forEach( ( elem )=>{
                     elem.addEventListener( eventName , callback );
                 } );
             }//if
 
         }//if
-
+        else{
+            this._element.addEventListener( eventName , callback );
+        }//else
 
     }//on
 

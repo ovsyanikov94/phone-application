@@ -5,7 +5,8 @@ import HttpService from '../services/http.service';
 import PhoneViewer from '../phone-viewer/PhoneViewer';
 import Component from "../component/component";
 import ShoppingCart from "../shopping-cart/ShoppingCart";
-
+import Filter from '../filter/Filter';
+import Sorter from '../sorter/Sorter';
 
 export default class PhonePage extends Component{
 
@@ -23,6 +24,13 @@ export default class PhonePage extends Component{
         });
 
 
+        this._filter = new Filter({
+            element: document.querySelector('[data-component="phone-filter"]'),
+        });
+
+        this._sorter = new Sorter({
+            element: document.querySelector('[data-component="phone-sorter"]'),
+        });
 
         this._load();
 
@@ -58,8 +66,78 @@ export default class PhonePage extends Component{
 
     onPhoneRemoveFromBasket( event ){
         this._shoppingCart.removePhone( event.detail );
+    }
+
+    async onPhoneFilter( event ){
+
+
+        let phones = await HttpService.send('public/phones/phones.json');
+
+        let userInput = event.detail.toLowerCase();
+
+        let result = phones.filter( ( phone )=>{
+
+            return phone.name.toLowerCase().indexOf( userInput ) !== -1;
+
+        } );
+
+        this._catalogue.setPhones(  result );
 
     }
+
+    async onSortValueChanged( event ){
+
+        let value = event.detail;
+        let phones = this._catalogue.getPhones();
+
+        switch( value ){
+
+            case 'alpha': {
+
+                let alphaSortResult = phones.sort( ( left , right )=>{
+
+                    if( left.name > right.name ){
+                        return 1;
+                    }//if
+                    else if( left.name === right.name ){
+                        return 0;
+                    }//else if
+
+                    return -1;
+
+                } );
+
+                this._catalogue.setPhones( alphaSortResult );
+
+            } break;
+            case 'newest': {
+
+                let newestSortResult = phones.sort( ( left , right )=>{
+
+                    if( +left.age > +right.age ){
+                        return 1;
+                    }//if
+                    else if( +left.age === +right.age ){
+                        return 0;
+                    }//else if
+
+                    return -1;
+
+                } );
+
+                this._catalogue.setPhones( newestSortResult );
+
+            } break;
+            case '-1': {
+
+                let phones = await HttpService.send('public/phones/phones.json');
+                this._catalogue.setPhones( phones );
+
+            } break;
+
+        }//switch
+
+    }//onSortValueChanged
 
     async _load(){
 
@@ -72,30 +150,12 @@ export default class PhonePage extends Component{
                 phones: phones,
             });
 
-            let phonesFromCookies = JSON.parse(document.cookie.split('=')[1]);
-            console.log(phonesFromCookies);
-
-            phones.forEach( p=> {
-
-                phonesFromCookies.forEach( sub => {
-
-                    if( sub.id === p.id ){
-
-                        this._shoppingCart.addPhone({
-                            'name': p.name,
-                            'amount': sub.amount
-                        });
-
-                    }//if
-
-                } );
-
-            } );
-
             this.on('phoneSelected' , this.onPhoneSelected.bind(this) , '[data-component="phone-catalogue"]');
             this.on('moveBack' , this.onButtonBack.bind(this) , '[data-component="phone-viewer"]');
             this.on('addPhoneToBasket' , this.onPhoneAdded.bind(this) , '[data-component="phone-viewer"]');
             this.on('removePhoneFromBasket' , this.onPhoneRemoveFromBasket.bind(this) , '[data-component="shopping-cart"]');
+            this.on('filterEvent' , this.onPhoneFilter.bind(this) , '[data-component="phone-filter"]');
+            this.on('sortValueChanged' , this.onSortValueChanged.bind(this) , '[data-component="phone-sorter"]');
 
         }//try
         catch(ex){

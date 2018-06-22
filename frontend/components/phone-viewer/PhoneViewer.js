@@ -41,7 +41,8 @@ export default class PhoneViewer extends Component{
     _addPhoneToBasket(  ){
 
         let addPhoneEvent = new CustomEvent('addPhoneToBasket',{
-            detail: this._phone
+            detail: this._phone,
+            bubbles: true
         });
 
         this._element.dispatchEvent(addPhoneEvent);
